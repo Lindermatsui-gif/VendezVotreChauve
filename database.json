@@ -1,0 +1,19 @@
+{
+    "balance": 99.0,
+    "listings": [
+        {
+            "id": 1,
+            "name": "test",
+            "age": 65,
+            "location": "Albuquerque",
+            "baldness": 80,
+            "description": "T",
+            "price": 16.0,
+            "bids": 1,
+            "time": "24h 00m",
+            "featured": false,
+            "image": null,
+            "owner": "me"
+        }
+    ]
+}

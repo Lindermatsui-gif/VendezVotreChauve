@@ -1,0 +1,3653 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VendezVotreChauve</title>
+
+<style>
+
+:root {
+    --blue: #1769ff;
+    --blue-dark: #0d55d9;
+    --black: #101828;
+    --text: #172033;
+    --muted: #667085;
+    --light: #98a2b3;
+    --border: #e4e7ec;
+    --background: #f6f7f9;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+    max-width: 1280px;
+    height: 76px;
+    margin: auto;
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    color: var(--black);
+    text-decoration: none;
+
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -1px;
+
+    white-space: nowrap;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--blue);
+    border-radius: 11px;
+
+    font-size: 22px;
+}
+
+.brand-blue {
+    color: var(--blue);
+}
+
+.nav-center {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-link {
+    color: #475467;
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    transition: .15s;
+}
+
+.nav-link:hover {
+    color: var(--blue);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wallet {
+    padding: 10px 13px;
+
+    background: #f2f6ff;
+    color: #175cd3;
+
+    border: 1px solid #dbe5ff;
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    white-space: nowrap;
+}
+
+.sell-button {
+    border: 0;
+
+    padding: 12px 17px;
+
+    background: var(--blue);
+    color: white;
+
+    border-radius: 9px;
+
+    font-weight: 900;
+
+    white-space: nowrap;
+
+    transition: .15s;
+}
+
+.sell-button:hover {
+    background: var(--blue-dark);
+}
+
+
+/* ============================================================
+   HERO
+============================================================ */
+
+.hero {
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(23,105,255,.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #fff,
+            #f8faff
+        );
+
+    border-bottom: 1px solid var(--border);
+}
+
+.hero-inner {
+    max-width: 1280px;
+    min-height: 570px;
+
+    margin: auto;
+    padding: 80px 24px;
+
+    display: flex;
+    align-items: center;
+
+    position: relative;
+}
+
+.hero-content {
+    width: 65%;
+    position: relative;
+    z-index: 2;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 10px;
+
+    background: #edf4ff;
+    color: var(--blue);
+
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    margin-bottom: 20px;
+}
+
+.eyebrow-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--blue);
+}
+
+.hero h1 {
+    max-width: 800px;
+
+    font-size: clamp(48px, 6vw, 78px);
+
+    line-height: .94;
+
+    letter-spacing: -5px;
+
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    color: var(--blue);
+}
+
+.hero-description {
+    max-width: 650px;
+
+    color: var(--muted);
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+}
+
+
+/* ============================================================
+   SEARCH
+============================================================ */
+
+.search-container {
+    max-width: 850px;
+
+    display: flex;
+
+    padding: 6px;
+
+    background: white;
+
+    border: 1px solid #dfe3e9;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 18px 50px
+        rgba(16,24,40,.09);
+}
+
+.search-icon {
+    width: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--light);
+}
+
+.search-container input {
+    flex: 1;
+
+    min-width: 0;
+
+    border: 0;
+
+    outline: 0;
+
+    padding: 0 10px;
+
+    color: var(--text);
+}
+
+.search-button {
+    border: 0;
+
+    padding: 14px 23px;
+
+    background: var(--blue);
+
+    color: white;
+
+    border-radius: 8px;
+
+    font-weight: 900;
+}
+
+
+/* ============================================================
+   HERO STATS
+============================================================ */
+
+.hero-stats {
+    display: flex;
+    gap: 35px;
+    margin-top: 30px;
+}
+
+.hero-stat strong {
+    display: block;
+    font-size: 22px;
+}
+
+.hero-stat span {
+    color: var(--light);
+    font-size: 12px;
+}
+
+
+/* ============================================================
+   HERO ART
+============================================================ */
+
+.hero-art {
+    position: absolute;
+
+    right: 4%;
+
+    width: 430px;
+    height: 430px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #e9f0ff,
+            #f8faff 65%,
+            transparent 66%
+        );
+}
+
+.hero-person {
+    font-size: 230px;
+
+    filter:
+        drop-shadow(
+            0 25px 30px
+            rgba(16,24,40,.12)
+        );
+}
+
+
+/* ============================================================
+   MAIN
+============================================================ */
+
+.main {
+    max-width: 1280px;
+
+    margin: auto;
+
+    padding: 65px 24px 100px;
+}
+
+.section {
+    margin-bottom: 70px;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.section-title h2 {
+    font-size: 30px;
+    letter-spacing: -1.4px;
+}
+
+.section-title p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.view-all {
+    color: var(--blue);
+
+    font-size: 13px;
+    font-weight: 900;
+
+    text-decoration: none;
+}
+
+
+/* ============================================================
+   FEATURED
+============================================================ */
+
+.featured-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.featured-card {
+    overflow: hidden;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    transition: .2s;
+}
+
+.featured-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 25px 55px
+        rgba(16,24,40,.11);
+}
+
+.featured-image {
+    height: 230px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eaf1ff,
+            #f8f9fb
+        );
+}
+
+.featured-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.featured-placeholder {
+    font-size: 120px;
+}
+
+.featured-badge {
+    position: absolute;
+
+    top: 14px;
+    left: 14px;
+
+    padding: 7px 10px;
+
+    background: var(--blue);
+    color: white;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.featured-info {
+    padding: 18px;
+}
+
+.featured-name {
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.featured-location {
+    color: var(--light);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.featured-bottom {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-top: 17px;
+}
+
+.featured-price-label {
+    color: var(--light);
+
+    font-size: 10px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.featured-price {
+    font-size: 24px;
+    font-weight: 950;
+}
+
+.featured-bids {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.featured-action {
+    border: 0;
+
+    padding: 11px 14px;
+
+    background: var(--black);
+    color: white;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+/* ============================================================
+   TABS
+============================================================ */
+
+.tabs {
+    display: flex;
+    gap: 7px;
+
+    margin-bottom: 22px;
+}
+
+.tab {
+    border: 1px solid var(--border);
+
+    background: white;
+    color: var(--muted);
+
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.tab.active {
+    background: var(--black);
+    color: white;
+
+    border-color: var(--black);
+}
+
+
+/* ============================================================
+   LISTINGS
+============================================================ */
+
+.listing-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.listing-card {
+    overflow: hidden;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    transition: .2s;
+}
+
+.listing-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 20px 40px
+        rgba(16,24,40,.08);
+}
+
+.listing-image {
+    height: 220px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #edf3ff,
+            #f8f9fb
+        );
+}
+
+.listing-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.listing-placeholder {
+    font-size: 105px;
+}
+
+.listing-badge {
+    position: absolute;
+
+    top: 13px;
+    left: 13px;
+
+    padding: 6px 8px;
+
+    background: var(--black);
+    color: white;
+
+    border-radius: 6px;
+
+    font-size: 9px;
+    font-weight: 900;
+}
+
+.listing-time {
+    position: absolute;
+
+    top: 13px;
+    right: 13px;
+
+    padding: 6px 8px;
+
+    background: rgba(255,255,255,.92);
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.listing-body {
+    padding: 18px;
+}
+
+.listing-name {
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.listing-location {
+    color: var(--light);
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+.listing-description {
+    min-height: 42px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.45;
+
+    margin-top: 14px;
+}
+
+.listing-stats {
+    display: flex;
+
+    gap: 6px;
+
+    margin-top: 13px;
+}
+
+.stat {
+    padding: 6px 8px;
+
+    background: #f2f4f7;
+
+    color: #475467;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.listing-price-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 17px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #eaecf0;
+}
+
+.price-label {
+    color: var(--light);
+
+    font-size: 9px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.listing-price {
+    font-size: 24px;
+    font-weight: 950;
+}
+
+.listing-bids {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.listing-actions {
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 14px;
+}
+
+.bid-button {
+    flex: 1;
+
+    border: 0;
+
+    padding: 11px;
+
+    background: var(--black);
+    color: white;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.buy-button {
+    border: 0;
+
+    padding: 11px 13px;
+
+    background: var(--blue);
+    color: white;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: 900;
+}
+
+
+/* ============================================================
+   EMPTY
+============================================================ */
+
+.my-empty {
+    grid-column: 1 / -1;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 55px 25px;
+
+    text-align: center;
+
+    color: var(--muted);
+}
+
+.my-empty-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.my-empty h3 {
+    color: var(--black);
+
+    font-size: 20px;
+
+    margin-bottom: 7px;
+}
+
+.my-empty p {
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   HOW
+============================================================ */
+
+.how-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.how-card {
+    padding: 27px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+}
+
+.how-number {
+    width: 39px;
+    height: 39px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #edf4ff;
+    color: var(--blue);
+
+    border-radius: 9px;
+
+    font-weight: 950;
+
+    margin-bottom: 20px;
+}
+
+.how-card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.how-card p {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.55;
+}
+
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+footer {
+    background: var(--black);
+
+    color: white;
+
+    padding: 55px 24px;
+}
+
+.footer-inner {
+    max-width: 1280px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.footer-brand {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.footer-text {
+    max-width: 400px;
+
+    color: var(--light);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-top: 9px;
+}
+
+
+/* ============================================================
+   MODALS
+============================================================ */
+
+.modal-background {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 5000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(16,24,40,.62);
+
+    backdrop-filter: blur(7px);
+}
+
+.modal {
+    width: 100%;
+    max-width: 520px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 29px;
+}
+
+.modal-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    font-size: 26px;
+}
+
+.close {
+    width: 32px;
+    height: 32px;
+
+    border: 0;
+
+    background: #f2f4f7;
+
+    border-radius: 8px;
+
+    font-size: 18px;
+}
+
+.modal-description {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.55;
+
+    margin-bottom: 22px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+
+    color: #344054;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--blue);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(23,105,255,.10);
+}
+
+.form-group textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+}
+
+.file-input {
+    padding: 10px !important;
+
+    background: #f9fafb;
+}
+
+.range-value {
+    color: var(--blue);
+}
+
+.modal-actions {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 22px;
+}
+
+.modal-actions button {
+    flex: 1;
+
+    border: 0;
+
+    padding: 13px;
+
+    border-radius: 8px;
+
+    font-weight: 900;
+}
+
+.cancel-button {
+    background: #f2f4f7;
+
+    color: #344054;
+}
+
+.confirm-button {
+    background: var(--blue);
+
+    color: white;
+}
+
+
+/* ============================================================
+   TOAST
+============================================================ */
+
+.toast {
+    position: fixed;
+
+    right: 22px;
+    bottom: 22px;
+
+    z-index: 10000;
+
+    min-width: 280px;
+
+    padding: 15px 18px;
+
+    background: var(--black);
+
+    color: white;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.2);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    opacity: 0;
+
+    transform: translateY(15px);
+
+    pointer-events: none;
+
+    transition: .25s;
+}
+
+.toast.show {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media(max-width:1150px) {
+
+    .nav-center {
+        gap: 15px;
+    }
+
+    .nav-link {
+        font-size: 12px;
+    }
+
+    .hero-content {
+        width: 75%;
+    }
+
+    .hero-art {
+        opacity: .35;
+
+        right: -60px;
+    }
+
+    .featured-grid,
+    .listing-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+}
+
+
+@media(max-width:850px) {
+
+    .nav-center {
+        display: none;
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero-art {
+        opacity: .18;
+    }
+}
+
+
+@media(max-width:680px) {
+
+    .navbar {
+        padding: 0 15px;
+    }
+
+    .brand {
+        font-size: 17px;
+    }
+
+    .wallet {
+        display: none;
+    }
+
+    .sell-button {
+        padding: 10px 12px;
+
+        font-size: 11px;
+    }
+
+    .hero-inner {
+        padding: 55px 18px;
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 50px;
+
+        letter-spacing: -3px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+    }
+
+    .hero-art {
+        display: none;
+    }
+
+    .search-container {
+        flex-direction: column;
+    }
+
+    .search-icon {
+        display: none;
+    }
+
+    .search-container input {
+        padding: 14px;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+
+    .hero-stats {
+        gap: 18px;
+    }
+
+    .hero-stat strong {
+        font-size: 18px;
+    }
+
+    .main {
+        padding: 45px 18px 80px;
+    }
+
+    .featured-grid,
+    .listing-grid,
+    .how-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal {
+        padding: 22px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+
+<header>
+
+<nav class="navbar">
+
+<a href="#" class="brand">
+
+    <div class="brand-icon">
+        🧑‍🦲
+    </div>
+
+    <div>
+        VendezVotre<span class="brand-blue">Chauve</span>
+    </div>
+
+</a>
+
+
+<div class="nav-center">
+
+    <a
+        href="#featured-section"
+        class="nav-link"
+    >
+        Featured
+    </a>
+
+    <a
+        href="#auctions"
+        class="nav-link"
+    >
+        Enchères
+    </a>
+
+    <a
+        href="#my-listings"
+        class="nav-link"
+    >
+        Mes chauves
+    </a>
+
+    <a
+        href="#how"
+        class="nav-link"
+    >
+        Comment ça marche
+    </a>
+
+</div>
+
+
+<div class="nav-right">
+
+    <div class="wallet">
+
+        💰
+
+        <span id="balance">
+            100.00
+        </span>
+
+        €
+
+    </div>
+
+
+    <button
+        class="sell-button"
+        onclick="openSell()"
+    >
+        Vendre mon chauve
+    </button>
+
+</div>
+
+</nav>
+
+</header>
+
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+
+<section class="hero">
+
+<div class="hero-inner">
+
+
+<div class="hero-content">
+
+
+<div class="eyebrow">
+
+    <span class="eyebrow-dot"></span>
+
+    Marketplace officielle des chauves
+
+</div>
+
+
+<h1>
+
+    Votre prochain
+    <span>chauve</span>
+    est ici.
+
+</h1>
+
+
+<p class="hero-description">
+
+    Découvrez des profils exceptionnels,
+    participez aux enchères et trouvez
+    le chauve qui correspond à vos attentes.
+
+</p>
+
+
+<div class="search-container">
+
+    <div class="search-icon">
+        🔎
+    </div>
+
+    <input
+        id="search"
+        type="text"
+        placeholder="Nom, ville, niveau de calvitie..."
+    >
+
+    <button
+        class="search-button"
+        onclick="searchListings()"
+    >
+        Rechercher
+    </button>
+
+</div>
+
+
+<div class="hero-stats">
+
+    <div class="hero-stat">
+
+        <strong id="totalListings">
+            0
+        </strong>
+
+        <span>
+            chauves disponibles
+        </span>
+
+    </div>
+
+
+    <div class="hero-stat">
+
+        <strong id="totalBids">
+            0
+        </strong>
+
+        <span>
+            enchères en cours
+        </span>
+
+    </div>
+
+
+    <div class="hero-stat">
+
+        <strong>
+            100%
+        </strong>
+
+        <span>
+            de calvitie potentielle
+        </span>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div class="hero-art">
+
+    <div class="hero-person">
+        🧑‍🦲
+    </div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- ============================================================
+     MAIN
+============================================================ -->
+
+<main class="main">
+
+
+<section
+    class="section"
+    id="featured-section"
+>
+
+<div class="section-header">
+
+<div class="section-title">
+
+<h2>
+    ⭐ Chauves en vedette
+</h2>
+
+<p>
+    Les profils les plus remarquables du moment.
+</p>
+
+</div>
+
+<a
+    href="#auctions"
+    class="view-all"
+>
+    Voir tous les chauves →
+</a>
+
+</div>
+
+
+<div
+    id="featured"
+    class="featured-grid"
+>
+</div>
+
+</section>
+
+
+<!-- ============================================================
+     AUCTIONS
+============================================================ -->
+
+<section
+    class="section"
+    id="auctions"
+>
+
+<div class="section-header">
+
+<div class="section-title">
+
+<h2>
+    🔥 Les enchères du moment
+</h2>
+
+<p>
+    Les annonces actuellement disponibles.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="tabs">
+
+<button
+    class="tab active"
+    onclick="loadCategory('all', this)"
+>
+    Toutes
+</button>
+
+<button
+    class="tab"
+    onclick="loadCategory('popular', this)"
+>
+    🔥 Populaires
+</button>
+
+<button
+    class="tab"
+    onclick="loadCategory('new', this)"
+>
+    🆕 Nouvelles
+</button>
+
+</div>
+
+
+<div
+    id="listings"
+    class="listing-grid"
+>
+</div>
+
+</section>
+
+
+<!-- ============================================================
+     MY LISTINGS
+============================================================ -->
+
+<section
+    class="section"
+    id="my-listings"
+>
+
+<div class="section-header">
+
+<div class="section-title">
+
+<h2>
+    🧑‍🦲 Mes chauves
+</h2>
+
+<p>
+    Les chauves que vous avez mis en vente.
+</p>
+
+</div>
+
+</div>
+
+
+<div
+    id="myListings"
+    class="listing-grid"
+>
+</div>
+
+</section>
+
+
+<!-- ============================================================
+     HOW IT WORKS
+============================================================ -->
+
+<section
+    class="section"
+    id="how"
+>
+
+<div class="section-header">
+
+<div class="section-title">
+
+<h2>
+    Comment ça marche ?
+</h2>
+
+<p>
+    Trois étapes pour entrer sur le marché.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="how-grid">
+
+
+<div class="how-card">
+
+<div class="how-number">
+    01
+</div>
+
+<h3>
+    Trouvez votre chauve
+</h3>
+
+<p>
+    Parcourez les annonces disponibles
+    et trouvez le profil qui vous intéresse.
+</p>
+
+</div>
+
+
+<div class="how-card">
+
+<div class="how-number">
+    02
+</div>
+
+<h3>
+    Enchérissez
+</h3>
+
+<p>
+    Faites une offre supérieure à
+    l'enchère actuelle pour tenter
+    de remporter l'annonce.
+</p>
+
+</div>
+
+
+<div class="how-card">
+
+<div class="how-number">
+    03
+</div>
+
+<h3>
+    Faites affaire
+</h3>
+
+<p>
+    Utilisez votre solde pour acheter
+    directement une annonce disponible.
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+
+<footer>
+
+<div class="footer-inner">
+
+<div>
+
+<div class="footer-brand">
+    VendezVotreChauve
+</div>
+
+<p class="footer-text">
+    La marketplace parodique dédiée
+    aux profils fictifs de chauves.
+</p>
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- ============================================================
+     SELL MODAL
+============================================================ -->
+
+<div
+    id="sellModal"
+    class="modal-background"
+    onclick="closeSellOutside(event)"
+>
+
+
+<div
+    class="modal"
+    onclick="event.stopPropagation()"
+>
+
+
+<div class="modal-header">
+
+<h3>
+    Vendre un chauve
+</h3>
+
+<button
+    class="close"
+    onclick="closeSell()"
+>
+    ×
+</button>
+
+</div>
+
+
+<p class="modal-description">
+
+    Créez votre annonce et ajoutez une photo.
+
+</p>
+
+
+<form
+    id="sellForm"
+    onsubmit="submitListing(event)"
+>
+
+
+<div class="form-group">
+
+<label>
+    Nom
+</label>
+
+<input
+    name="name"
+    required
+    placeholder="Jean-Michel"
+>
+
+</div>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+    Âge
+</label>
+
+<input
+    name="age"
+    type="number"
+    min="18"
+    max="120"
+    required
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    Ville
+</label>
+
+<input
+    name="location"
+    required
+    placeholder="Paris"
+>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    Description
+</label>
+
+<textarea
+    name="description"
+    required
+    placeholder="Décrivez votre chauve..."
+></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+
+    Niveau de calvitie :
+
+    <span
+        id="baldnessValue"
+        class="range-value"
+    >
+        80
+    </span>
+
+    %
+
+</label>
+
+<input
+    name="baldness"
+    type="range"
+    min="0"
+    max="100"
+    value="80"
+    oninput="
+        document.getElementById(
+            'baldnessValue'
+        ).textContent = this.value
+    "
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    Prix de départ
+</label>
+
+<input
+    name="starting_price"
+    type="number"
+    min="1"
+    step="0.01"
+    value="100"
+    required
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    Photo
+</label>
+
+<input
+    class="file-input"
+    name="image"
+    type="file"
+    accept="image/png,image/jpeg,image/webp"
+>
+
+</div>
+
+
+<div class="modal-actions">
+
+<button
+    type="button"
+    class="cancel-button"
+    onclick="closeSell()"
+>
+    Annuler
+</button>
+
+<button
+    type="submit"
+    class="confirm-button"
+>
+    Publier l'annonce
+</button>
+
+</div>
+
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- ============================================================
+     BID MODAL
+============================================================ -->
+
+<div
+    id="bidModal"
+    class="modal-background"
+    onclick="closeBidOutside(event)"
+>
+
+
+<div
+    class="modal"
+    onclick="event.stopPropagation()"
+>
+
+
+<div class="modal-header">
+
+<h3>
+    🔨 Enchérir
+</h3>
+
+<button
+    class="close"
+    onclick="closeBid()"
+>
+    ×
+</button>
+
+</div>
+
+
+<p
+    id="bidText"
+    class="modal-description"
+>
+</p>
+
+
+<form
+    onsubmit="submitBid(event)"
+>
+
+
+<div class="form-group">
+
+<label>
+    Votre enchère
+</label>
+
+<input
+    id="bidAmount"
+    type="number"
+    min="1"
+    step="0.01"
+    required
+>
+
+</div>
+
+
+<div class="modal-actions">
+
+<button
+    type="button"
+    class="cancel-button"
+    onclick="closeBid()"
+>
+    Annuler
+</button>
+
+<button
+    type="submit"
+    class="confirm-button"
+>
+    Placer l'enchère
+</button>
+
+</div>
+
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- ============================================================
+     TOAST
+============================================================ -->
+
+<div
+    id="toast"
+    class="toast"
+>
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+
+<script>
+
+let listings = [];
+
+let balance = 100;
+
+let currentBidId = null;
+
+
+/* ============================================================
+   TOAST
+============================================================ */
+
+let toastTimeout = null;
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    if (!toast) return;
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimeout);
+
+    toastTimeout = setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 3000);
+
+}
+
+
+/* ============================================================
+   API HELPER
+============================================================ */
+
+async function apiRequest(url, options = {}) {
+
+    const response =
+        await fetch(url, options);
+
+    let data = {};
+
+    try {
+
+        data =
+            await response.json();
+
+    } catch {
+
+        data = {};
+
+    }
+
+    if (!response.ok) {
+
+        throw new Error(
+            data.detail ||
+            "Une erreur est survenue."
+        );
+
+    }
+
+    return data;
+
+}
+
+
+/* ============================================================
+   LOAD STATE
+============================================================ */
+
+async function loadState() {
+
+    try {
+
+        const data =
+            await apiRequest(
+                "/api/state"
+            );
+
+
+        balance =
+            Number(
+                data.balance ?? 100
+            );
+
+
+        listings =
+            Array.isArray(data.listings)
+                ? data.listings
+                : [];
+
+
+        updateBalance();
+
+        renderFeatured();
+
+        renderListings();
+
+        renderMyListings();
+
+        updateStats();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Erreur loadState:",
+            error
+        );
+
+        showToast(
+            "Impossible de contacter le serveur."
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   BALANCE
+============================================================ */
+
+function updateBalance() {
+
+    const element =
+        document.getElementById(
+            "balance"
+        );
+
+    if (!element) return;
+
+    element.textContent =
+        Number(balance).toFixed(2);
+
+}
+
+
+/* ============================================================
+   STATS
+============================================================ */
+
+function updateStats() {
+
+    const totalListings =
+        document.getElementById(
+            "totalListings"
+        );
+
+    const totalBids =
+        document.getElementById(
+            "totalBids"
+        );
+
+
+    if (totalListings) {
+
+        totalListings.textContent =
+            listings.length;
+
+    }
+
+
+    if (totalBids) {
+
+        totalBids.textContent =
+            listings.reduce(
+                (total, listing) => {
+
+                    return total +
+                        Number(
+                            listing.bids || 0
+                        );
+
+                },
+                0
+            );
+
+    }
+
+}
+
+
+/* ============================================================
+   FEATURED
+============================================================ */
+
+function renderFeatured() {
+
+    const container =
+        document.getElementById(
+            "featured"
+        );
+
+    if (!container) return;
+
+
+    const featured =
+        listings.filter(
+            listing =>
+                listing.featured === true
+        );
+
+
+    if (featured.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="my-empty">
+
+                <div class="my-empty-icon">
+                    ⭐
+                </div>
+
+                <h3>
+                    Aucun chauve en vedette
+                </h3>
+
+                <p>
+                    Les meilleures annonces
+                    apparaîtront ici.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        featured
+            .map(createFeaturedCard)
+            .join("");
+
+}
+
+
+/* ============================================================
+   FEATURED CARD
+============================================================ */
+
+function createFeaturedCard(listing) {
+
+    const image =
+        listing.image
+
+        ?
+
+        `
+        <img
+            src="${escapeHTML(
+                listing.image
+            )}"
+            alt="${escapeHTML(
+                listing.name
+            )}"
+            onerror="
+                this.style.display='none';
+                this.nextElementSibling.style.display='block';
+            "
+        >
+
+        <div
+            class="featured-placeholder"
+            style="display:none"
+        >
+            🧑‍🦲
+        </div>
+        `
+
+        :
+
+        `
+        <div class="featured-placeholder">
+            🧑‍🦲
+        </div>
+        `;
+
+
+    const isMine =
+        listing.owner === "me";
+
+
+    return `
+
+        <article class="featured-card">
+
+            <div class="featured-image">
+
+                ${image}
+
+                <div class="featured-badge">
+                    ⭐ FEATURED
+                </div>
+
+            </div>
+
+
+            <div class="featured-info">
+
+                <div class="featured-name">
+
+                    ${escapeHTML(
+                        listing.name
+                    )}
+
+                </div>
+
+
+                <div class="featured-location">
+
+                    ${escapeHTML(
+                        listing.location
+                    )}
+
+                    ·
+
+                    ${listing.age} ans
+
+                </div>
+
+
+                <div class="featured-bottom">
+
+                    <div>
+
+                        <div class="featured-price-label">
+                            Enchère actuelle
+                        </div>
+
+                        <div class="featured-price">
+                            ${formatPrice(
+                                listing.price
+                            )}
+                        </div>
+
+                        <div class="featured-bids">
+
+                            ${Number(
+                                listing.bids || 0
+                            )}
+
+                            enchères
+
+                        </div>
+
+                    </div>
+
+
+                    ${
+                        isMine
+
+                        ?
+
+                        `
+                        <button
+                            class="featured-action"
+                            disabled
+                            style="
+                                opacity:.45;
+                                cursor:not-allowed;
+                            "
+                        >
+                            Votre chauve
+                        </button>
+                        `
+
+                        :
+
+                        `
+                        <button
+                            class="featured-action"
+                            onclick="
+                                openBid(
+                                    ${Number(listing.id)}
+                                )
+                            "
+                        >
+                            Enchérir
+                        </button>
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* ============================================================
+   LISTINGS
+============================================================ */
+
+function renderListings(
+    data = listings
+) {
+
+    const container =
+        document.getElementById(
+            "listings"
+        );
+
+    if (!container) return;
+
+
+    if (!data.length) {
+
+        container.innerHTML = `
+
+            <div class="my-empty">
+
+                <div class="my-empty-icon">
+                    🧑‍🦲
+                </div>
+
+                <h3>
+                    Aucun chauve disponible
+                </h3>
+
+                <p>
+                    Soyez le premier à mettre
+                    un chauve en vente.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        data
+            .map(createListingCard)
+            .join("");
+
+}
+
+
+/* ============================================================
+   LISTING CARD
+============================================================ */
+
+function createListingCard(listing) {
+
+    const image =
+        listing.image
+
+        ?
+
+        `
+        <img
+            src="${escapeHTML(
+                listing.image
+            )}"
+            alt="${escapeHTML(
+                listing.name
+            )}"
+            onerror="
+                this.style.display='none';
+                this.nextElementSibling.style.display='block';
+            "
+        >
+
+        <div
+            class="listing-placeholder"
+            style="display:none"
+        >
+            🧑‍🦲
+        </div>
+        `
+
+        :
+
+        `
+        <div class="listing-placeholder">
+            🧑‍🦲
+        </div>
+        `;
+
+
+    const isMine =
+        listing.owner === "me";
+
+
+    return `
+
+        <article class="listing-card">
+
+
+            <div class="listing-image">
+
+                ${image}
+
+
+                ${
+                    listing.featured
+
+                    ?
+
+                    `
+                    <div class="listing-badge">
+                        FEATURED
+                    </div>
+                    `
+
+                    :
+
+                    ""
+                }
+
+
+                <div class="listing-time">
+
+                    ⏱
+
+                    ${escapeHTML(
+                        listing.time ||
+                        "24h 00m"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="listing-body">
+
+
+                <div class="listing-name">
+
+                    ${escapeHTML(
+                        listing.name
+                    )}
+
+                </div>
+
+
+                <div class="listing-location">
+
+                    ${escapeHTML(
+                        listing.location
+                    )}
+
+                    ·
+
+                    ${listing.age} ans
+
+                </div>
+
+
+                <div class="listing-description">
+
+                    ${escapeHTML(
+                        listing.description
+                    )}
+
+                </div>
+
+
+                <div class="listing-stats">
+
+                    <div class="stat">
+
+                        🧑‍🦲
+
+                        ${Number(
+                            listing.baldness || 0
+                        )}%
+
+                        calvitie
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        🔨
+
+                        ${Number(
+                            listing.bids || 0
+                        )}
+
+                        enchères
+
+                    </div>
+
+                </div>
+
+
+                <div class="listing-price-row">
+
+                    <div>
+
+                        <div class="price-label">
+                            Enchère actuelle
+                        </div>
+
+                        <div class="listing-price">
+
+                            ${formatPrice(
+                                listing.price
+                            )}
+
+                        </div>
+
+                        <div class="listing-bids">
+
+                            ${Number(
+                                listing.bids || 0
+                            )}
+
+                            enchères
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="listing-actions">
+
+
+                    ${
+                        isMine
+
+                        ?
+
+                        `
+                        <button
+                            class="bid-button"
+                            disabled
+                            style="
+                                opacity:.45;
+                                cursor:not-allowed;
+                            "
+                        >
+                            🧑‍🦲 Votre chauve
+                        </button>
+                        `
+
+                        :
+
+                        `
+
+                        <button
+                            class="bid-button"
+                            onclick="
+                                openBid(
+                                    ${Number(listing.id)}
+                                )
+                            "
+                        >
+                            🔨 Enchérir
+                        </button>
+
+
+                        <button
+                            class="buy-button"
+                            onclick="
+                                buyListing(
+                                    ${Number(listing.id)}
+                                )
+                            "
+                        >
+                            Acheter
+                        </button>
+
+                        `
+
+                    }
+
+                </div>
+
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* ============================================================
+   MY LISTINGS
+============================================================ */
+
+function renderMyListings() {
+
+    const container =
+        document.getElementById(
+            "myListings"
+        );
+
+    if (!container) return;
+
+
+    const mine =
+        listings.filter(
+            listing =>
+                listing.owner === "me"
+        );
+
+
+    if (!mine.length) {
+
+        container.innerHTML = `
+
+            <div class="my-empty">
+
+                <div class="my-empty-icon">
+                    🧑‍🦲
+                </div>
+
+                <h3>
+                    Vous n'avez aucun chauve en vente
+                </h3>
+
+                <p>
+                    Cliquez sur
+                    « Vendre mon chauve »
+                    pour créer votre première annonce.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        mine
+            .map(createListingCard)
+            .join("");
+
+}
+
+
+/* ============================================================
+   CATEGORY
+============================================================ */
+
+function loadCategory(
+    category,
+    button
+) {
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(
+            tab =>
+                tab.classList.remove(
+                    "active"
+                )
+        );
+
+
+    if (button) {
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    let result =
+        [...listings];
+
+
+    if (category === "popular") {
+
+        result.sort(
+            (a, b) =>
+
+                Number(b.bids || 0) -
+                Number(a.bids || 0)
+        );
+
+    }
+
+
+    if (category === "new") {
+
+        result.sort(
+            (a, b) =>
+
+                Number(b.id || 0) -
+                Number(a.id || 0)
+        );
+
+    }
+
+
+    renderListings(result);
+
+}
+
+
+/* ============================================================
+   SEARCH
+============================================================ */
+
+function searchListings() {
+
+    const input =
+        document.getElementById(
+            "search"
+        );
+
+    if (!input) return;
+
+
+    const query =
+        input.value
+            .trim()
+            .toLowerCase();
+
+
+    if (!query) {
+
+        renderListings();
+
+        return;
+
+    }
+
+
+    const result =
+        listings.filter(
+            listing => {
+
+                return (
+
+                    String(
+                        listing.name || ""
+                    )
+                    .toLowerCase()
+                    .includes(query)
+
+                    ||
+
+                    String(
+                        listing.location || ""
+                    )
+                    .toLowerCase()
+                    .includes(query)
+
+                    ||
+
+                    String(
+                        listing.description || ""
+                    )
+                    .toLowerCase()
+                    .includes(query)
+
+                    ||
+
+                    String(
+                        listing.baldness || ""
+                    )
+                    .includes(query)
+
+                );
+
+            }
+        );
+
+
+    renderListings(result);
+
+
+    document
+        .getElementById(
+            "auctions"
+        )
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+document
+    .getElementById("search")
+    .addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                searchListings();
+
+            }
+
+        }
+    );
+
+
+/* ============================================================
+   SELL MODAL
+============================================================ */
+
+function openSell() {
+
+    document
+        .getElementById(
+            "sellModal"
+        )
+        .style.display = "flex";
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeSell() {
+
+    document
+        .getElementById(
+            "sellModal"
+        )
+        .style.display = "none";
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+function closeSellOutside(event) {
+
+    if (
+        event.target.id ===
+        "sellModal"
+    ) {
+
+        closeSell();
+
+    }
+
+}
+
+
+/* ============================================================
+   CREATE LISTING
+============================================================ */
+
+async function submitListing(event) {
+
+    event.preventDefault();
+
+
+    const form =
+        document.getElementById(
+            "sellForm"
+        );
+
+
+    const submitButton =
+        form.querySelector(
+            'button[type="submit"]'
+        );
+
+
+    const formData =
+        new FormData(form);
+
+
+    submitButton.disabled = true;
+
+    submitButton.textContent =
+        "Publication...";
+
+
+    try {
+
+        await apiRequest(
+            "/api/listings",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+
+        closeSell();
+
+
+        form.reset();
+
+
+        document
+            .getElementById(
+                "baldnessValue"
+            )
+            .textContent = "80";
+
+
+        await loadState();
+
+
+        document
+            .getElementById(
+                "my-listings"
+            )
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+
+        showToast(
+            "🔥 Votre chauve est maintenant en vente !"
+        );
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message
+        );
+
+    }
+
+    finally {
+
+        submitButton.disabled = false;
+
+        submitButton.textContent =
+            "Publier l'annonce";
+
+    }
+
+}
+
+
+/* ============================================================
+   BID MODAL
+============================================================ */
+
+function openBid(id) {
+
+    const listing =
+        listings.find(
+            x =>
+                Number(x.id) ===
+                Number(id)
+        );
+
+
+    if (!listing) {
+
+        showToast(
+            "Annonce introuvable."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        listing.owner === "me"
+    ) {
+
+        showToast(
+            "Tu ne peux pas enchérir sur ton propre chauve."
+        );
+
+        return;
+
+    }
+
+
+    currentBidId =
+        Number(id);
+
+
+    document
+        .getElementById(
+            "bidText"
+        )
+        .innerHTML = `
+
+            Enchérissez sur
+
+            <strong>
+                ${escapeHTML(
+                    listing.name
+                )}
+            </strong>
+
+            <br><br>
+
+            Enchère actuelle :
+
+            <strong>
+                ${formatPrice(
+                    listing.price
+                )}
+            </strong>
+
+        `;
+
+
+    const amount =
+        document.getElementById(
+            "bidAmount"
+        );
+
+
+    const minimum =
+        Number(listing.price) + 1;
+
+
+    amount.min =
+        minimum.toFixed(2);
+
+    amount.value =
+        minimum.toFixed(2);
+
+
+    document
+        .getElementById(
+            "bidModal"
+        )
+        .style.display = "flex";
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeBid() {
+
+    document
+        .getElementById(
+            "bidModal"
+        )
+        .style.display = "none";
+
+
+    document.body.style.overflow =
+        "";
+
+
+    currentBidId = null;
+
+}
+
+
+function closeBidOutside(event) {
+
+    if (
+        event.target.id ===
+        "bidModal"
+    ) {
+
+        closeBid();
+
+    }
+
+}
+
+
+/* ============================================================
+   SUBMIT BID
+============================================================ */
+
+async function submitBid(event) {
+
+    event.preventDefault();
+
+
+    if (!currentBidId) return;
+
+
+    const amount =
+        Number(
+            document
+                .getElementById(
+                    "bidAmount"
+                )
+                .value
+        );
+
+
+    if (!Number.isFinite(amount)) {
+
+        showToast(
+            "Montant invalide."
+        );
+
+        return;
+
+    }
+
+
+    const listing =
+        listings.find(
+            x =>
+                Number(x.id) ===
+                Number(currentBidId)
+        );
+
+
+    if (!listing) {
+
+        closeBid();
+
+        showToast(
+            "Cette annonce n'existe plus."
+        );
+
+        await loadState();
+
+        return;
+
+    }
+
+
+    if (
+        listing.owner === "me"
+    ) {
+
+        closeBid();
+
+        showToast(
+            "Tu ne peux pas enchérir sur ton propre chauve."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        amount <=
+        Number(listing.price)
+    ) {
+
+        showToast(
+            "Ton enchère doit être supérieure au prix actuel."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        amount >
+        Number(balance)
+    ) {
+
+        showToast(
+            "Tu n'as pas assez d'argent."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        await apiRequest(
+            `/api/bid/${currentBidId}`,
+            {
+                method: "POST",
+
+                body:
+                    (() => {
+
+                        const formData =
+                            new FormData();
+
+                        formData.append(
+                            "amount",
+                            amount
+                        );
+
+                        return formData;
+
+                    })()
+            }
+        );
+
+
+        closeBid();
+
+
+        await loadState();
+
+
+        showToast(
+            "🔥 Votre enchère a été placée !"
+        );
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   BUY
+============================================================ */
+
+async function buyListing(id) {
+
+    const listing =
+        listings.find(
+            x =>
+                Number(x.id) ===
+                Number(id)
+        );
+
+
+    if (!listing) {
+
+        showToast(
+            "Annonce introuvable."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        listing.owner === "me"
+    ) {
+
+        showToast(
+            "Tu ne peux pas acheter ton propre chauve."
+        );
+
+        return;
+
+    }
+
+
+    const price =
+        Number(listing.price);
+
+
+    if (
+        price >
+        Number(balance)
+    ) {
+
+        showToast(
+
+            `Solde insuffisant : ` +
+
+            `${formatPrice(balance)} ` +
+
+            `disponibles.`
+
+        );
+
+        return;
+
+    }
+
+
+    const confirmation =
+        confirm(
+
+            `Acheter ${listing.name} ` +
+
+            `pour ${formatPrice(price)} ?`
+
+        );
+
+
+    if (!confirmation) return;
+
+
+    try {
+
+        const data =
+            await apiRequest(
+                `/api/buy/${id}`,
+                {
+                    method: "POST"
+                }
+            );
+
+
+        balance =
+            Number(
+                data.balance
+            );
+
+
+        updateBalance();
+
+
+        await loadState();
+
+
+        showToast(
+            `🔥 Vous avez acheté ${listing.name} !`
+        );
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message
+        );
+
+        await loadState();
+
+    }
+
+}
+
+
+/* ============================================================
+   ESCAPE HTML
+============================================================ */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* ============================================================
+   PRICE
+============================================================ */
+
+function formatPrice(value) {
+
+    const number =
+        Number(value);
+
+
+    if (!Number.isFinite(number)) {
+        return "0.00 €";
+    }
+
+
+    return (
+        number.toFixed(2) +
+        " €"
+    );
+
+}
+
+
+/* ============================================================
+   ESC KEY
+============================================================ */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeSell();
+
+            closeBid();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   START
+============================================================ */
+
+loadState();
+
+</script>
+
+
+</body>
+
+</html>
