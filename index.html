@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -41,6 +42,7 @@ body {
         "Segoe UI",
         Arial,
         sans-serif;
+
     background: var(--background);
     color: var(--text);
 }
@@ -64,20 +66,26 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
+
     background: rgba(255,255,255,.94);
+
     backdrop-filter: blur(15px);
+
     border-bottom: 1px solid var(--border);
 }
 
 .navbar {
     max-width: 1280px;
     height: 76px;
+
     margin: auto;
     padding: 0 24px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    gap: 15px;
 }
 
 .brand {
@@ -86,10 +94,12 @@ header {
     gap: 11px;
 
     color: var(--black);
+
     text-decoration: none;
 
     font-size: 20px;
     font-weight: 900;
+
     letter-spacing: -1px;
 
     white-space: nowrap;
@@ -104,6 +114,7 @@ header {
     justify-content: center;
 
     background: var(--blue);
+
     border-radius: 11px;
 
     font-size: 22px;
@@ -121,6 +132,7 @@ header {
 
 .nav-link {
     color: #475467;
+
     text-decoration: none;
 
     font-size: 13px;
@@ -136,7 +148,8 @@ header {
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+
+    gap: 8px;
 }
 
 .wallet {
@@ -146,12 +159,36 @@ header {
     color: #175cd3;
 
     border: 1px solid #dbe5ff;
+
     border-radius: 9px;
 
     font-size: 13px;
     font-weight: 900;
 
     white-space: nowrap;
+}
+
+.account-button {
+    border: 1px solid var(--border);
+
+    padding: 10px 13px;
+
+    background: white;
+    color: var(--text);
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    white-space: nowrap;
+
+    transition: .15s;
+}
+
+.account-button:hover {
+    border-color: var(--blue);
+    color: var(--blue);
 }
 
 .sell-button {
@@ -211,6 +248,7 @@ header {
 
 .hero-content {
     width: 65%;
+
     position: relative;
     z-index: 2;
 }
@@ -218,6 +256,7 @@ header {
 .eyebrow {
     display: inline-flex;
     align-items: center;
+
     gap: 7px;
 
     padding: 7px 10px;
@@ -340,17 +379,21 @@ header {
 
 .hero-stats {
     display: flex;
+
     gap: 35px;
+
     margin-top: 30px;
 }
 
 .hero-stat strong {
     display: block;
+
     font-size: 22px;
 }
 
 .hero-stat span {
     color: var(--light);
+
     font-size: 12px;
 }
 
@@ -368,6 +411,7 @@ header {
     height: 430px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -411,7 +455,9 @@ header {
 
 .section-header {
     display: flex;
+
     align-items: flex-end;
+
     justify-content: space-between;
 
     margin-bottom: 25px;
@@ -419,12 +465,15 @@ header {
 
 .section-title h2 {
     font-size: 30px;
+
     letter-spacing: -1.4px;
 }
 
 .section-title p {
     color: var(--muted);
+
     font-size: 14px;
+
     margin-top: 6px;
 }
 
@@ -432,6 +481,7 @@ header {
     color: var(--blue);
 
     font-size: 13px;
+
     font-weight: 900;
 
     text-decoration: none;
@@ -477,6 +527,7 @@ header {
     position: relative;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -508,11 +559,13 @@ header {
     padding: 7px 10px;
 
     background: var(--blue);
+
     color: white;
 
     border-radius: 6px;
 
     font-size: 10px;
+
     font-weight: 900;
 }
 
@@ -522,12 +575,15 @@ header {
 
 .featured-name {
     font-size: 19px;
+
     font-weight: 900;
 }
 
 .featured-location {
     color: var(--light);
+
     font-size: 12px;
+
     margin-top: 4px;
 }
 
@@ -535,6 +591,7 @@ header {
     display: flex;
 
     align-items: flex-end;
+
     justify-content: space-between;
 
     margin-top: 17px;
@@ -544,6 +601,7 @@ header {
     color: var(--light);
 
     font-size: 10px;
+
     font-weight: 900;
 
     text-transform: uppercase;
@@ -551,11 +609,13 @@ header {
 
 .featured-price {
     font-size: 24px;
+
     font-weight: 950;
 }
 
 .featured-bids {
     color: var(--muted);
+
     font-size: 11px;
 }
 
@@ -565,11 +625,13 @@ header {
     padding: 11px 14px;
 
     background: var(--black);
+
     color: white;
 
     border-radius: 8px;
 
     font-size: 12px;
+
     font-weight: 900;
 }
 
@@ -580,6 +642,7 @@ header {
 
 .tabs {
     display: flex;
+
     gap: 7px;
 
     margin-bottom: 22px;
@@ -589,6 +652,7 @@ header {
     border: 1px solid var(--border);
 
     background: white;
+
     color: var(--muted);
 
     padding: 10px 15px;
@@ -596,11 +660,13 @@ header {
     border-radius: 8px;
 
     font-size: 12px;
+
     font-weight: 900;
 }
 
 .tab.active {
     background: var(--black);
+
     color: white;
 
     border-color: var(--black);
@@ -646,6 +712,7 @@ header {
     position: relative;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -677,11 +744,13 @@ header {
     padding: 6px 8px;
 
     background: var(--black);
+
     color: white;
 
     border-radius: 6px;
 
     font-size: 9px;
+
     font-weight: 900;
 }
 
@@ -698,6 +767,7 @@ header {
     border-radius: 6px;
 
     font-size: 10px;
+
     font-weight: 900;
 }
 
@@ -707,6 +777,7 @@ header {
 
 .listing-name {
     font-size: 19px;
+
     font-weight: 900;
 }
 
@@ -748,6 +819,7 @@ header {
     border-radius: 6px;
 
     font-size: 10px;
+
     font-weight: 900;
 }
 
@@ -767,6 +839,7 @@ header {
     color: var(--light);
 
     font-size: 9px;
+
     font-weight: 900;
 
     text-transform: uppercase;
@@ -774,11 +847,13 @@ header {
 
 .listing-price {
     font-size: 24px;
+
     font-weight: 950;
 }
 
 .listing-bids {
     color: var(--muted);
+
     font-size: 10px;
 }
 
@@ -798,11 +873,13 @@ header {
     padding: 11px;
 
     background: var(--black);
+
     color: white;
 
     border-radius: 8px;
 
     font-size: 11px;
+
     font-weight: 900;
 }
 
@@ -812,11 +889,13 @@ header {
     padding: 11px 13px;
 
     background: var(--blue);
+
     color: white;
 
     border-radius: 8px;
 
     font-size: 11px;
+
     font-weight: 900;
 }
 
@@ -843,6 +922,7 @@ header {
 
 .my-empty-icon {
     font-size: 55px;
+
     margin-bottom: 15px;
 }
 
@@ -887,10 +967,12 @@ header {
     height: 39px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     background: #edf4ff;
+
     color: var(--blue);
 
     border-radius: 9px;
@@ -902,6 +984,7 @@ header {
 
 .how-card h3 {
     font-size: 17px;
+
     margin-bottom: 8px;
 }
 
@@ -938,6 +1021,7 @@ footer {
 
 .footer-brand {
     font-size: 18px;
+
     font-weight: 900;
 }
 
@@ -979,6 +1063,7 @@ footer {
 
 .modal {
     width: 100%;
+
     max-width: 520px;
 
     max-height: 90vh;
@@ -1125,6 +1210,45 @@ footer {
 
 
 /* ============================================================
+   ACCOUNT MODAL
+============================================================ */
+
+.account-info {
+    background: #f8faff;
+
+    border: 1px solid #dbe5ff;
+
+    border-radius: 10px;
+
+    padding: 14px;
+
+    margin-bottom: 18px;
+}
+
+.account-info-label {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    margin-bottom: 5px;
+}
+
+.account-info-id {
+    color: var(--black);
+
+    font-size: 12px;
+
+    font-family: monospace;
+
+    word-break: break-all;
+}
+
+
+/* ============================================================
    TOAST
 ============================================================ */
 
@@ -1151,6 +1275,7 @@ footer {
         rgba(0,0,0,.2);
 
     font-size: 13px;
+
     font-weight: 800;
 
     opacity: 0;
@@ -1166,6 +1291,31 @@ footer {
     opacity: 1;
 
     transform: translateY(0);
+}
+
+
+/* ============================================================
+   LOADING
+============================================================ */
+
+.loading {
+    grid-column: 1 / -1;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 45px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    font-weight: 800;
 }
 
 
@@ -1214,6 +1364,7 @@ footer {
     .hero-art {
         opacity: .18;
     }
+
 }
 
 
@@ -1228,6 +1379,10 @@ footer {
     }
 
     .wallet {
+        display: none;
+    }
+
+    .account-button {
         display: none;
     }
 
@@ -1312,6 +1467,7 @@ footer {
     .modal {
         padding: 22px;
     }
+
 }
 
 </style>
@@ -1389,6 +1545,14 @@ footer {
         €
 
     </div>
+
+
+    <button
+        class="account-button"
+        onclick="openAccount()"
+    >
+        👤 Compte
+    </button>
 
 
     <button
@@ -1566,6 +1730,11 @@ footer {
     id="featured"
     class="featured-grid"
 >
+
+<div class="loading">
+    Chargement...
+</div>
+
 </div>
 
 </section>
@@ -1627,6 +1796,11 @@ footer {
     id="listings"
     class="listing-grid"
 >
+
+<div class="loading">
+    Chargement...
+</div>
+
 </div>
 
 </section>
@@ -1662,6 +1836,11 @@ footer {
     id="myListings"
     class="listing-grid"
 >
+
+<div class="loading">
+    Chargement...
+</div>
+
 </div>
 
 </section>
@@ -1941,6 +2120,7 @@ footer {
     name="starting_price"
     type="number"
     min="1"
+    max="1000000"
     step="0.01"
     value="100"
     required
@@ -2082,6 +2262,92 @@ footer {
 
 
 <!-- ============================================================
+     ACCOUNT MODAL
+============================================================ -->
+
+<div
+    id="accountModal"
+    class="modal-background"
+    onclick="closeAccountOutside(event)"
+>
+
+<div
+    class="modal"
+    onclick="event.stopPropagation()"
+>
+
+<div class="modal-header">
+
+<h3>
+    👤 Votre compte
+</h3>
+
+<button
+    class="close"
+    onclick="closeAccount()"
+>
+    ×
+</button>
+
+</div>
+
+
+<div class="account-info">
+
+<div class="account-info-label">
+    Identifiant du compte
+</div>
+
+<div
+    id="accountId"
+    class="account-info-id"
+>
+    Chargement...
+</div>
+
+</div>
+
+
+<p class="modal-description">
+
+    Votre compte est automatiquement associé
+    à ce navigateur grâce à un cookie sécurisé.
+
+    <br><br>
+
+    Si vous créez un nouveau compte,
+    votre navigateur utilisera un nouvel identifiant
+    avec un solde de départ de 100 €.
+
+</p>
+
+
+<div class="modal-actions">
+
+<button
+    type="button"
+    class="cancel-button"
+    onclick="closeAccount()"
+>
+    Fermer
+</button>
+
+<button
+    type="button"
+    class="confirm-button"
+    onclick="newAccount()"
+>
+    Nouveau compte
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ============================================================
      TOAST
 ============================================================ -->
 
@@ -2102,21 +2368,25 @@ let listings = [];
 
 let balance = 100;
 
+let accountId = null;
+
 let currentBidId = null;
+
+let toastTimeout = null;
 
 
 /* ============================================================
    TOAST
 ============================================================ */
 
-let toastTimeout = null;
-
 function showToast(message) {
 
     const toast =
         document.getElementById("toast");
 
-    if (!toast) return;
+    if (!toast) {
+        return;
+    }
 
     toast.textContent = message;
 
@@ -2140,7 +2410,13 @@ function showToast(message) {
 async function apiRequest(url, options = {}) {
 
     const response =
-        await fetch(url, options);
+        await fetch(
+            url,
+            {
+                credentials: "same-origin",
+                ...options
+            }
+        );
 
     let data = {};
 
@@ -2149,7 +2425,9 @@ async function apiRequest(url, options = {}) {
         data =
             await response.json();
 
-    } catch {
+    }
+
+    catch {
 
         data = {};
 
@@ -2170,6 +2448,63 @@ async function apiRequest(url, options = {}) {
 
 
 /* ============================================================
+   ACCOUNT
+============================================================ */
+
+async function loadAccount() {
+
+    try {
+
+        const data =
+            await apiRequest(
+                "/api/account"
+            );
+
+        accountId =
+            data.account_id || null;
+
+        balance =
+            Number(
+                data.balance ?? 100
+            );
+
+        updateBalance();
+
+        updateAccountUI();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Erreur compte:",
+            error
+        );
+
+    }
+
+}
+
+
+function updateAccountUI() {
+
+    const element =
+        document.getElementById(
+            "accountId"
+        );
+
+    if (!element) {
+        return;
+    }
+
+    element.textContent =
+        accountId ||
+        "Compte inconnu";
+
+}
+
+
+/* ============================================================
    LOAD STATE
 ============================================================ */
 
@@ -2181,6 +2516,11 @@ async function loadState() {
             await apiRequest(
                 "/api/state"
             );
+
+
+        accountId =
+            data.account_id ||
+            accountId;
 
 
         balance =
@@ -2195,7 +2535,41 @@ async function loadState() {
                 : [];
 
 
+        /*
+         * Le main.py actuel renvoie uniquement
+         * les annonces du compte courant.
+         *
+         * On ajoute donc owner = "me"
+         * côté frontend.
+         */
+
+        listings =
+            listings.map(
+                listing => {
+
+                    const copy =
+                        {
+                            ...listing
+                        };
+
+                    if (
+                        !copy.owner ||
+                        copy.owner === accountId
+                    ) {
+
+                        copy.owner = "me";
+
+                    }
+
+                    return copy;
+
+                }
+            );
+
+
         updateBalance();
+
+        updateAccountUI();
 
         renderFeatured();
 
@@ -2234,7 +2608,9 @@ function updateBalance() {
             "balance"
         );
 
-    if (!element) return;
+    if (!element) {
+        return;
+    }
 
     element.textContent =
         Number(balance).toFixed(2);
@@ -2298,7 +2674,9 @@ function renderFeatured() {
             "featured"
         );
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
 
     const featured =
@@ -2424,7 +2802,9 @@ function createFeaturedCard(listing) {
 
                     ·
 
-                    ${listing.age} ans
+                    ${Number(
+                        listing.age
+                    )} ans
 
                 </div>
 
@@ -2514,7 +2894,9 @@ function renderListings(
             "listings"
         );
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
 
     if (!data.length) {
@@ -2660,7 +3042,9 @@ function createListingCard(listing) {
 
                     ·
 
-                    ${listing.age} ans
+                    ${Number(
+                        listing.age
+                    )} ans
 
                 </div>
 
@@ -2787,6 +3171,7 @@ function createListingCard(listing) {
 
                     }
 
+
                 </div>
 
 
@@ -2810,7 +3195,9 @@ function renderMyListings() {
             "myListings"
         );
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
 
     const mine =
@@ -2929,7 +3316,9 @@ function searchListings() {
             "search"
         );
 
-    if (!input) return;
+    if (!input) {
+        return;
+    }
 
 
     const query =
@@ -3123,6 +3512,8 @@ async function submitListing(event) {
             .textContent = "80";
 
 
+        await loadAccount();
+
         await loadState();
 
 
@@ -3301,7 +3692,9 @@ async function submitBid(event) {
     event.preventDefault();
 
 
-    if (!currentBidId) return;
+    if (!currentBidId) {
+        return;
+    }
 
 
     const amount =
@@ -3393,31 +3786,42 @@ async function submitBid(event) {
 
     try {
 
-        await apiRequest(
-            `/api/bid/${currentBidId}`,
-            {
-                method: "POST",
+        const formData =
+            new FormData();
 
-                body:
-                    (() => {
-
-                        const formData =
-                            new FormData();
-
-                        formData.append(
-                            "amount",
-                            amount
-                        );
-
-                        return formData;
-
-                    })()
-            }
+        formData.append(
+            "amount",
+            amount.toFixed(2)
         );
+
+
+        const data =
+            await apiRequest(
+                `/api/bid/${currentBidId}`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        if (
+            data &&
+            data.balance !== undefined
+        ) {
+
+            balance =
+                Number(
+                    data.balance
+                );
+
+        }
 
 
         closeBid();
 
+
+        await loadAccount();
 
         await loadState();
 
@@ -3433,6 +3837,8 @@ async function submitBid(event) {
         showToast(
             error.message
         );
+
+        await loadState();
 
     }
 
@@ -3511,7 +3917,9 @@ async function buyListing(id) {
         );
 
 
-    if (!confirmation) return;
+    if (!confirmation) {
+        return;
+    }
 
 
     try {
@@ -3525,14 +3933,20 @@ async function buyListing(id) {
             );
 
 
-        balance =
-            Number(
-                data.balance
-            );
+        if (
+            data &&
+            data.balance !== undefined
+        ) {
+
+            balance =
+                Number(
+                    data.balance
+                );
+
+        }
 
 
-        updateBalance();
-
+        await loadAccount();
 
         await loadState();
 
@@ -3549,7 +3963,122 @@ async function buyListing(id) {
             error.message
         );
 
+        await loadAccount();
+
         await loadState();
+
+    }
+
+}
+
+
+/* ============================================================
+   ACCOUNT MODAL
+============================================================ */
+
+function openAccount() {
+
+    updateAccountUI();
+
+    document
+        .getElementById(
+            "accountModal"
+        )
+        .style.display = "flex";
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeAccount() {
+
+    document
+        .getElementById(
+            "accountModal"
+        )
+        .style.display = "none";
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+function closeAccountOutside(event) {
+
+    if (
+        event.target.id ===
+        "accountModal"
+    ) {
+
+        closeAccount();
+
+    }
+
+}
+
+
+/* ============================================================
+   NEW ACCOUNT
+============================================================ */
+
+async function newAccount() {
+
+    const confirmation =
+        confirm(
+
+            "Créer un nouveau compte ?\n\n" +
+
+            "Ce navigateur utilisera ensuite " +
+
+            "le nouveau compte avec un solde de 100 €."
+
+        );
+
+
+    if (!confirmation) {
+        return;
+    }
+
+
+    try {
+
+        await apiRequest(
+            "/api/account/new",
+            {
+                method: "POST"
+            }
+        );
+
+
+        accountId = null;
+
+        balance = 100;
+
+        listings = [];
+
+
+        await loadAccount();
+
+        await loadState();
+
+
+        closeAccount();
+
+
+        showToast(
+            "✅ Nouveau compte créé avec 100,00 €."
+        );
+
+    }
+
+    catch (error) {
+
+        showToast(
+            error.message
+        );
 
     }
 
@@ -3605,7 +4134,9 @@ function formatPrice(value) {
 
 
     if (!Number.isFinite(number)) {
+
         return "0.00 €";
+
     }
 
 
@@ -3633,6 +4164,8 @@ document.addEventListener(
 
             closeBid();
 
+            closeAccount();
+
         }
 
     }
@@ -3643,7 +4176,16 @@ document.addEventListener(
    START
 ============================================================ */
 
-loadState();
+async function initialize() {
+
+    await loadAccount();
+
+    await loadState();
+
+}
+
+
+initialize();
 
 </script>
 
@@ -3651,3 +4193,4 @@ loadState();
 </body>
 
 </html>
+```

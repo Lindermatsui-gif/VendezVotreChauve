@@ -1,10 +1,12 @@
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
 from pathlib import Path
+from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import uuid
 import json
 import uvicorn
+
 
 # ============================================================
 # CONFIG
@@ -27,8 +29,7 @@ app = FastAPI(title="VendezVotreChauve")
 
 def default_database():
     return {
-        "balance": 100.0,
-        "listings": []
+        "accounts": {}
     }
 
 
@@ -66,11 +67,8 @@ def load_database():
         if not isinstance(data, dict):
             raise ValueError("Database invalide")
 
-        if "balance" not in data:
-            data["balance"] = 100.0
-
-        if "listings" not in data:
-            data["listings"] = []
+        if "accounts" not in data:
+            data["accounts"] = {}
 
         return data
 
@@ -92,11 +90,50 @@ database = load_database()
 
 
 # ============================================================
+# ACCOUNT
+# ============================================================
+
+def create_account():
+
+    account_id = uuid.uuid4().hex
+
+    database["accounts"][account_id] = {
+        "balance": 100.0,
+        "listings": []
+    }
+
+    save_database(database)
+
+    return account_id
+
+
+def get_account(request: Request):
+
+    account_id = request.cookies.get("vvchauve_account")
+
+    if not account_id:
+        account_id = create_account()
+
+        return account_id, database["accounts"][account_id], True
+
+    if account_id not in database["accounts"]:
+
+        database["accounts"][account_id] = {
+            "balance": 100.0,
+            "listings": []
+        }
+
+        save_database(database)
+
+    return account_id, database["accounts"][account_id], False
+
+
+# ============================================================
 # PAGE
 # ============================================================
 
 @app.get("/", response_class=HTMLResponse)
-async def home():
+async def home(request: Request):
 
     if not HTML_FILE.exists():
 
@@ -105,9 +142,81 @@ async def home():
             status_code=500
         )
 
-    return HTML_FILE.read_text(
+    account_id, account, new_account = get_account(request)
+
+    html = HTML_FILE.read_text(
         encoding="utf-8"
     )
+
+    response = HTMLResponse(html)
+
+    if new_account:
+
+        response.set_cookie(
+            key="vvchauve_account",
+            value=account_id,
+            max_age=60 * 60 * 24 * 365 * 5,
+            httponly=True,
+            samesite="lax",
+            secure=True
+        )
+
+    return response
+
+
+# ============================================================
+# ACCOUNT API
+# ============================================================
+
+@app.get("/api/account")
+async def get_account_api(request: Request):
+
+    account_id, account, new_account = get_account(request)
+
+    response = JSONResponse({
+        "success": True,
+        "account_id": account_id,
+        "balance": account["balance"],
+        "listings": account["listings"]
+    })
+
+    if new_account:
+
+        response.set_cookie(
+            key="vvchauve_account",
+            value=account_id,
+            max_age=60 * 60 * 24 * 365 * 5,
+            httponly=True,
+            samesite="lax",
+            secure=True
+        )
+
+    return response
+
+
+# ============================================================
+# LOGOUT / NEW ACCOUNT
+# ============================================================
+
+@app.post("/api/account/new")
+async def new_account(request: Request):
+
+    account_id = create_account()
+
+    response = JSONResponse({
+        "success": True
+    })
+
+    response.set_cookie(
+        key="vvchauve_account",
+        value=account_id,
+        max_age=60 * 60 * 24 * 365 * 5,
+        httponly=True,
+        samesite="lax",
+        secure=True
+    )
+
+    return response
 
 
 # ============================================================
@@ -115,12 +224,27 @@ async def home():
 # ============================================================
 
 @app.get("/api/state")
-async def get_state():
+async def get_state(request: Request):
 
-    return {
-        "balance": database["balance"],
-        "listings": database["listings"]
-    }
+    account_id, account, new_account = get_account(request)
+
+    response = JSONResponse({
+        "balance": account["balance"],
+        "listings": account["listings"]
+    })
+
+    if new_account:
+
+        response.set_cookie(
+            key="vvchauve_account",
+            value=account_id,
+            max_age=60 * 60 * 24 * 365 * 5,
+            httponly=True,
+            samesite="lax",
+            secure=True
+        )
+
+    return response
 
 
 # ============================================================
@@ -133,6 +257,7 @@ async def uploaded_file(filename: str):
     file_path = UPLOAD_DIR / filename
 
     if not file_path.exists():
+
         raise HTTPException(
             status_code=404,
             detail="Image introuvable"
@@ -148,21 +273,19 @@ async def uploaded_file(filename: str):
 @app.post("/api/listings")
 async def create_listing(
 
+    request: Request,
+
     name: str = Form(...),
-
     age: int = Form(...),
-
     location: str = Form(...),
-
     description: str = Form(...),
-
     baldness: int = Form(...),
-
     starting_price: float = Form(...),
-
     image: UploadFile | None = File(None)
 
 ):
+
+    account_id, account, new_account = get_account(request)
 
     name = name.strip()
     location = location.strip()
@@ -216,6 +339,7 @@ async def create_listing(
             detail="Prix trop élevé."
         )
 
+
     # ========================================================
     # IMAGE
     # ========================================================
@@ -236,6 +360,7 @@ async def create_listing(
         }
 
         if extension not in allowed:
+
             raise HTTPException(
                 status_code=400,
                 detail="Format d'image non supporté."
@@ -246,13 +371,12 @@ async def create_listing(
             f"{extension}"
         )
 
-        destination = (
-            UPLOAD_DIR / filename
-        )
+        destination = UPLOAD_DIR / filename
 
         try:
 
             with destination.open("wb") as buffer:
+
                 shutil.copyfileobj(
                     image.file,
                     buffer
@@ -270,23 +394,26 @@ async def create_listing(
                 detail="Impossible d'enregistrer l'image."
             )
 
-        image_url = (
-            f"/uploads/{filename}"
-        )
+        image_url = f"/uploads/{filename}"
+
 
     # ========================================================
     # ID
     # ========================================================
 
-    listings = database["listings"]
+    all_listings = []
+
+    for acc in database["accounts"].values():
+        all_listings.extend(acc["listings"])
 
     new_id = max(
         [
             int(x.get("id", 0))
-            for x in listings
+            for x in all_listings
         ],
         default=0
     ) + 1
+
 
     # ========================================================
     # LISTING
@@ -319,21 +446,37 @@ async def create_listing(
 
         "image": image_url,
 
-        "owner": "me"
+        "owner": account_id
 
     }
 
-    listings.insert(
+
+    account["listings"].insert(
         0,
         new_listing
     )
 
     save_database(database)
 
-    return {
+
+    response = JSONResponse({
         "success": True,
         "listing": new_listing
-    }
+    })
+
+
+    if new_account:
+
+        response.set_cookie(
+            key="vvchauve_account",
+            value=account_id,
+            max_age=60 * 60 * 24 * 365 * 5,
+            httponly=True,
+            samesite="lax",
+            secure=True
+        )
+
+    return response
 
 
 # ============================================================
@@ -343,32 +486,50 @@ async def create_listing(
 @app.post("/api/bid/{listing_id}")
 async def bid(
 
+    request: Request,
+
     listing_id: int,
 
     amount: float = Form(...)
 
 ):
 
-    listing = next(
-        (
-            x for x in database["listings"]
-            if int(x["id"]) == listing_id
-        ),
-        None
-    )
+    account_id, account, new_account = get_account(request)
+
+
+    # Cherche dans tous les comptes
+    listing = None
+    owner_account = None
+
+    for owner_id, acc in database["accounts"].items():
+
+        for item in acc["listings"]:
+
+            if int(item["id"]) == listing_id:
+
+                listing = item
+                owner_account = acc
+                break
+
+        if listing:
+            break
+
 
     if listing is None:
+
         raise HTTPException(
             status_code=404,
             detail="Annonce introuvable."
         )
 
-    # Impossible d'enchérir sur son propre chauve
-    if listing.get("owner") == "me":
+
+    if listing.get("owner") == account_id:
+
         raise HTTPException(
             status_code=400,
             detail="Tu ne peux pas enchérir sur ton propre chauve."
         )
+
 
     amount = round(
         float(amount),
@@ -380,6 +541,7 @@ async def bid(
         2
     )
 
+
     if amount <= current_price:
 
         raise HTTPException(
@@ -390,16 +552,18 @@ async def bid(
             )
         )
 
-    if amount > database["balance"]:
+
+    if amount > account["balance"]:
 
         raise HTTPException(
             status_code=400,
             detail=(
                 f"Solde insuffisant. "
                 f"Tu as seulement "
-                f"{database['balance']:.2f} €."
+                f"{account['balance']:.2f} €."
             )
         )
+
 
     listing["price"] = amount
 
@@ -409,9 +573,10 @@ async def bid(
 
     save_database(database)
 
+
     return {
         "success": True,
-        "balance": database["balance"],
+        "balance": account["balance"],
         "listing": listing
     }
 
@@ -421,37 +586,51 @@ async def bid(
 # ============================================================
 
 @app.post("/api/buy/{listing_id}")
-async def buy(listing_id: int):
+async def buy(
 
-    listings = database["listings"]
+    request: Request,
 
-    listing = next(
-        (
-            x for x in listings
-            if int(x["id"]) == listing_id
-        ),
-        None
-    )
+    listing_id: int
+
+):
+
+    account_id, account, new_account = get_account(request)
+
+
+    listing = None
+    seller_account = None
+
+
+    for owner_id, acc in database["accounts"].items():
+
+        for item in acc["listings"]:
+
+            if int(item["id"]) == listing_id:
+
+                listing = item
+                seller_account = acc
+
+                break
+
+        if listing:
+            break
+
 
     if listing is None:
+
         raise HTTPException(
             status_code=404,
             detail="Annonce introuvable."
         )
 
-    # ========================================================
-    # PROPRE ANNONCE
-    # ========================================================
 
-    if listing.get("owner") == "me":
+    if listing.get("owner") == account_id:
 
         raise HTTPException(
             status_code=400,
-            detail=(
-                "Tu ne peux pas acheter "
-                "ton propre chauve."
-            )
+            detail="Tu ne peux pas acheter ton propre chauve."
         )
+
 
     price = round(
         float(listing["price"]),
@@ -459,9 +638,10 @@ async def buy(listing_id: int):
     )
 
     balance = round(
-        float(database["balance"]),
+        float(account["balance"]),
         2
     )
+
 
     if price > balance:
 
@@ -474,26 +654,37 @@ async def buy(listing_id: int):
             )
         )
 
+
     # ========================================================
     # TRANSACTION
     # ========================================================
 
-    database["balance"] = round(
+    account["balance"] = round(
         balance - price,
         2
     )
 
-    database["listings"] = [
+
+    # Le vendeur récupère l'argent
+    seller_account["balance"] = round(
+        float(seller_account["balance"]) + price,
+        2
+    )
+
+
+    seller_account["listings"] = [
         x
-        for x in listings
+        for x in seller_account["listings"]
         if int(x["id"]) != listing_id
     ]
 
+
     save_database(database)
+
 
     return {
         "success": True,
-        "balance": database["balance"],
+        "balance": account["balance"],
         "listing": listing
     }
 
@@ -504,7 +695,10 @@ async def buy(listing_id: int):
 
 @app.get("/favicon.ico")
 async def favicon():
-    return JSONResponse(content={})
+
+    return JSONResponse(
+        content={}
+    )
 
 
 # ============================================================

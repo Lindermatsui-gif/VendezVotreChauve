@@ -15,5 +15,30 @@
             "image": null,
             "owner": "me"
         }
-    ]
+    ],
+    "accounts": {
+        "dc9c65106ccd41e89a86737c2ecc3fd7": {
+            "balance": 100.0,
+            "listings": []
+        },
+        "c9c6dcb4a632467ba7494259c58c8fab": {
+            "balance": 100.0,
+            "listings": [
+                {
+                    "id": 1,
+                    "name": "TEST",
+                    "age": 18,
+                    "location": "Albuquerque",
+                    "baldness": 80,
+                    "description": "EZEE",
+                    "price": 100.0,
+                    "bids": 0,
+                    "time": "24h 00m",
+                    "featured": false,
+                    "image": null,
+                    "owner": "c9c6dcb4a632467ba7494259c58c8fab"
+                }
+            ]
+        }
+    }
 }
