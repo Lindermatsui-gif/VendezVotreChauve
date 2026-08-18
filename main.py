@@ -4,7 +4,10 @@ from pathlib import Path
 import shutil
 import uuid
 import json
+import os
 import uvicorn
+import psycopg2
+import psycopg2.extras
 
 
 # ============================================================
@@ -19,6 +22,15 @@ DATABASE_FILE = BASE_DIR / "database.json"
 
 UPLOAD_DIR.mkdir(exist_ok=True)
 
+# Si la variable d'environnement DATABASE_URL est définie (ex: sur
+# Render, pointant vers un projet Supabase gratuit), on stocke tout
+# dans Postgres, qui SURVIT aux redémarrages/redéploiements.
+#
+# Si elle n'est pas définie (ex: en local sur ta machine), on retombe
+# automatiquement sur le fichier database.json comme avant, pour ne
+# pas t'obliger à avoir Supabase pour développer/tester en local.
+DATABASE_URL = os.environ.get("https://yyhuufztgvpacqvopzgj.supabase.co")
+
 app = FastAPI(title="VendezVotreChauve")
 
 
@@ -26,13 +38,168 @@ app = FastAPI(title="VendezVotreChauve")
 # DATABASE
 # ============================================================
 
+# Compte "boutique" fictif : un id fixe (jamais un uuid généré par un
+# vrai visiteur), qui possède un petit catalogue d'annonces codées en
+# dur. Sert à garantir qu'il y a toujours des chauves en vente, même
+# juste après un déploiement ou un redémarrage à froid sur Render (où
+# le disque est éphémère et database.json repart de zéro).
+SYSTEM_ACCOUNT_ID = "system"
+
+DEFAULT_CATALOG = [
+    {
+        "name": "Robert",
+        "age": 47,
+        "location": "Marseille",
+        "baldness": 85,
+        "description": "Encore quelques cheveux sur les côtés, mais plus pour longtemps.",
+        "price": 50.0,
+    },
+]
+
+
+def build_default_listings():
+
+    listings = []
+
+    for index, item in enumerate(DEFAULT_CATALOG, start=1):
+
+        listings.append({
+            "id": index,
+            "name": item["name"],
+            "age": item["age"],
+            "location": item["location"],
+            "baldness": item["baldness"],
+            "description": item["description"],
+            "price": item["price"],
+            "bids": 0,
+            "time": "24h 00m",
+            "featured": False,
+            "image": None,
+            "owner": SYSTEM_ACCOUNT_ID,
+        })
+
+    return listings
+
+
 def default_database():
     return {
-        "accounts": {}
+        "accounts": {
+            SYSTEM_ACCOUNT_ID: {
+                "balance": 0.0,
+                "listings": build_default_listings(),
+            }
+        }
     }
 
 
-def save_database(data):
+def sanitize_database(data):
+    """
+    S'assure que la structure est valide et que le compte boutique
+    existe, peu importe d'où viennent les données (fichier local ou
+    Postgres). Utilisé par les deux modes de stockage ci-dessous.
+    """
+
+    if not isinstance(data, dict):
+        data = default_database()
+
+    if "accounts" not in data:
+        data["accounts"] = {}
+
+    if SYSTEM_ACCOUNT_ID not in data["accounts"]:
+
+        data["accounts"][SYSTEM_ACCOUNT_ID] = {
+            "balance": 0.0,
+            "listings": build_default_listings(),
+        }
+
+    return data
+
+
+# ------------------------------------------------------------
+# STOCKAGE : POSTGRES (Supabase) — persiste vraiment
+# ------------------------------------------------------------
+
+def get_pg_connection():
+    return psycopg2.connect(DATABASE_URL)
+
+
+def ensure_pg_table(conn):
+
+    with conn.cursor() as cur:
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS app_state (
+                id INTEGER PRIMARY KEY,
+                data JSONB NOT NULL
+            )
+            """
+        )
+
+    conn.commit()
+
+
+def save_database_pg(data):
+
+    conn = get_pg_connection()
+
+    try:
+
+        ensure_pg_table(conn)
+
+        with conn.cursor() as cur:
+
+            cur.execute(
+                """
+                INSERT INTO app_state (id, data)
+                VALUES (1, %s)
+                ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data
+                """,
+                (psycopg2.extras.Json(data),)
+            )
+
+        conn.commit()
+
+    finally:
+
+        conn.close()
+
+
+def load_database_pg():
+
+    conn = get_pg_connection()
+
+    try:
+
+        ensure_pg_table(conn)
+
+        with conn.cursor() as cur:
+
+            cur.execute("SELECT data FROM app_state WHERE id = 1")
+
+            row = cur.fetchone()
+
+    finally:
+
+        conn.close()
+
+    data = sanitize_database(row[0] if row else None)
+
+    # Si la ligne n'existait pas encore, ou si sanitize_database a dû
+    # rajouter le compte boutique, on réécrit en base tout de suite.
+    if row is None or row[0] != data:
+        save_database_pg(data)
+
+    return data
+
+
+# ------------------------------------------------------------
+# STOCKAGE : FICHIER LOCAL (repli, utilisé seulement si DATABASE_URL
+# n'est pas définie — pratique pour développer/tester en local)
+# ------------------------------------------------------------
+
+def save_database_file(data):
+
     temp_file = DATABASE_FILE.with_suffix(".tmp")
 
     with open(temp_file, "w", encoding="utf-8") as file:
@@ -46,11 +213,11 @@ def save_database(data):
     temp_file.replace(DATABASE_FILE)
 
 
-def load_database():
+def load_database_file():
 
     if not DATABASE_FILE.exists():
         data = default_database()
-        save_database(data)
+        save_database_file(data)
         return data
 
     try:
@@ -61,13 +228,12 @@ def load_database():
             encoding="utf-8"
         ) as file:
 
-            data = json.load(file)
+            raw = json.load(file)
 
-        if not isinstance(data, dict):
-            raise ValueError("Database invalide")
+        data = sanitize_database(raw)
 
-        if "accounts" not in data:
-            data["accounts"] = {}
+        if raw != data:
+            save_database_file(data)
 
         return data
 
@@ -80,9 +246,34 @@ def load_database():
 
         data = default_database()
 
-        save_database(data)
+        save_database_file(data)
 
         return data
+
+
+# ------------------------------------------------------------
+# POINT D'ENTRÉE COMMUN : bascule automatiquement selon DATABASE_URL
+# ------------------------------------------------------------
+
+def save_database(data):
+
+    if DATABASE_URL:
+        save_database_pg(data)
+    else:
+        save_database_file(data)
+
+
+def load_database():
+
+    if DATABASE_URL:
+
+        print("💾 Stockage : Postgres (persistant)")
+
+        return load_database_pg()
+
+    print("💾 Stockage : fichier local database.json (non persistant sur Render)")
+
+    return load_database_file()
 
 
 database = load_database()
