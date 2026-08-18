@@ -1,7 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
 from pathlib import Path
-from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import uuid
 import json
@@ -128,6 +127,99 @@ def get_account(request: Request):
     return account_id, database["accounts"][account_id], False
 
 
+def set_account_cookie(response, request: Request, account_id: str):
+    """
+    Pose le cookie de session.
+
+    BUG CORRIGÉ : `secure` était codé en dur à True. Or un cookie
+    "secure" n'est JAMAIS enregistré par le navigateur tant que la
+    page n'est pas servie en https://. En local (http://localhost)
+    ou derrière un déploiement sans HTTPS, le cookie ne survivait
+    donc jamais à la requête suivante : un nouveau compte (et donc
+    un nouveau solde de 100 €, avec toutes les annonces "perdues")
+    était recréé à chaque rechargement de page.
+
+    On calcule maintenant `secure` dynamiquement à partir du protocole
+    réel de la requête : True en https, False en http.
+    """
+
+    response.set_cookie(
+        key="vvchauve_account",
+        value=account_id,
+        max_age=60 * 60 * 24 * 365 * 5,
+        httponly=True,
+        samesite="lax",
+        secure=(request.url.scheme == "https"),
+    )
+
+
+# ============================================================
+# LISTINGS HELPERS
+# ============================================================
+
+def get_all_listings():
+    """
+    Renvoie TOUTES les annonces de TOUS les comptes (en copies), des
+    plus récentes aux plus anciennes.
+
+    BUG CORRIGÉ : /api/state ne renvoyait avant que les annonces du
+    compte courant (`account["listings"]`). Résultat : personne ne
+    pouvait jamais voir les annonces publiées par un autre compte, donc
+    il était structurellement impossible d'enchérir ou d'acheter quoi
+    que ce soit. Le frontend "cachait" même ce bug en forçant
+    `owner = "me"` sur tout ce qu'il recevait, ce qui désactivait alors
+    tous les boutons d'enchère/achat puisque tout semblait t'appartenir.
+    """
+
+    all_listings = []
+
+    for acc in database["accounts"].values():
+        for item in acc["listings"]:
+            all_listings.append(dict(item))
+
+    all_listings.sort(
+        key=lambda item: int(item.get("id", 0)),
+        reverse=True
+    )
+
+    return all_listings
+
+
+def apply_featured(listings_list, top_count=3):
+    """
+    Calcule dynamiquement les annonces "en vedette" (priorité aux plus
+    enchéries, puis aux plus chères). Rien n'est jamais réécrit en
+    base : le champ "featured" n'existe que dans la réponse envoyée.
+
+    BUG CORRIGÉ : "featured" restait toujours à False à la création et
+    rien ne le passait jamais à True nulle part dans le code. La
+    section "Chauves en vedette" du site était donc condamnée à rester
+    vide en permanence, quoi qu'il arrive.
+    """
+
+    if not listings_list:
+        return listings_list
+
+    ranked = sorted(
+        listings_list,
+        key=lambda item: (
+            int(item.get("bids", 0)),
+            float(item.get("price", 0))
+        ),
+        reverse=True
+    )
+
+    featured_ids = {
+        item["id"]
+        for item in ranked[:top_count]
+    }
+
+    for item in listings_list:
+        item["featured"] = item["id"] in featured_ids
+
+    return listings_list
+
+
 # ============================================================
 # PAGE
 # ============================================================
@@ -151,15 +243,7 @@ async def home(request: Request):
     response = HTMLResponse(html)
 
     if new_account:
-
-        response.set_cookie(
-            key="vvchauve_account",
-            value=account_id,
-            max_age=60 * 60 * 24 * 365 * 5,
-            httponly=True,
-            samesite="lax",
-            secure=True
-        )
+        set_account_cookie(response, request, account_id)
 
     return response
 
@@ -181,15 +265,7 @@ async def get_account_api(request: Request):
     })
 
     if new_account:
-
-        response.set_cookie(
-            key="vvchauve_account",
-            value=account_id,
-            max_age=60 * 60 * 24 * 365 * 5,
-            httponly=True,
-            samesite="lax",
-            secure=True
-        )
+        set_account_cookie(response, request, account_id)
 
     return response
 
@@ -207,14 +283,7 @@ async def new_account(request: Request):
         "success": True
     })
 
-    response.set_cookie(
-        key="vvchauve_account",
-        value=account_id,
-        max_age=60 * 60 * 24 * 365 * 5,
-        httponly=True,
-        samesite="lax",
-        secure=True
-    )
+    set_account_cookie(response, request, account_id)
 
     return response
 
@@ -228,21 +297,17 @@ async def get_state(request: Request):
 
     account_id, account, new_account = get_account(request)
 
+    all_listings = get_all_listings()
+    apply_featured(all_listings)
+
     response = JSONResponse({
+        "account_id": account_id,
         "balance": account["balance"],
-        "listings": account["listings"]
+        "listings": all_listings
     })
 
     if new_account:
-
-        response.set_cookie(
-            key="vvchauve_account",
-            value=account_id,
-            max_age=60 * 60 * 24 * 365 * 5,
-            httponly=True,
-            samesite="lax",
-            secure=True
-        )
+        set_account_cookie(response, request, account_id)
 
     return response
 
@@ -401,10 +466,7 @@ async def create_listing(
     # ID
     # ========================================================
 
-    all_listings = []
-
-    for acc in database["accounts"].values():
-        all_listings.extend(acc["listings"])
+    all_listings = get_all_listings()
 
     new_id = max(
         [
@@ -466,15 +528,7 @@ async def create_listing(
 
 
     if new_account:
-
-        response.set_cookie(
-            key="vvchauve_account",
-            value=account_id,
-            max_age=60 * 60 * 24 * 365 * 5,
-            httponly=True,
-            samesite="lax",
-            secure=True
-        )
+        set_account_cookie(response, request, account_id)
 
     return response
 
@@ -574,11 +628,16 @@ async def bid(
     save_database(database)
 
 
-    return {
+    response = JSONResponse({
         "success": True,
         "balance": account["balance"],
         "listing": listing
-    }
+    })
+
+    if new_account:
+        set_account_cookie(response, request, account_id)
+
+    return response
 
 
 # ============================================================
@@ -679,14 +738,30 @@ async def buy(
     ]
 
 
+    # BUG CORRIGÉ : l'acheteur ne récupérait jamais l'annonce achetée.
+    # Elle disparaissait juste du site sans jamais apparaître dans "Mes
+    # chauves" côté acheteur, ce qui rendait la revente impossible.
+    # Maintenant l'acheteur devient le nouveau propriétaire.
+    listing["owner"] = account_id
+    listing["bids"] = 0
+    listing["time"] = "24h 00m"
+
+    account["listings"].insert(0, listing)
+
+
     save_database(database)
 
 
-    return {
+    response = JSONResponse({
         "success": True,
         "balance": account["balance"],
         "listing": listing
-    }
+    })
+
+    if new_account:
+        set_account_cookie(response, request, account_id)
+
+    return response
 
 
 # ============================================================

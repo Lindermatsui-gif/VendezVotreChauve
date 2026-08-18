@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -2529,42 +2528,18 @@ async function loadState() {
             );
 
 
+        /*
+         * /api/state renvoie maintenant les annonces de TOUS les
+         * comptes (avec leur vrai "owner"), pas seulement les
+         * nôtres. On peut donc comparer directement listing.owner
+         * à notre accountId pour savoir ce qui nous appartient,
+         * sans bricolage côté frontend.
+         */
+
         listings =
             Array.isArray(data.listings)
                 ? data.listings
                 : [];
-
-
-        /*
-         * Le main.py actuel renvoie uniquement
-         * les annonces du compte courant.
-         *
-         * On ajoute donc owner = "me"
-         * côté frontend.
-         */
-
-        listings =
-            listings.map(
-                listing => {
-
-                    const copy =
-                        {
-                            ...listing
-                        };
-
-                    if (
-                        !copy.owner ||
-                        copy.owner === accountId
-                    ) {
-
-                        copy.owner = "me";
-
-                    }
-
-                    return copy;
-
-                }
-            );
 
 
         updateBalance();
@@ -2765,7 +2740,7 @@ function createFeaturedCard(listing) {
 
 
     const isMine =
-        listing.owner === "me";
+        listing.owner === accountId;
 
 
     return `
@@ -2978,7 +2953,7 @@ function createListingCard(listing) {
 
 
     const isMine =
-        listing.owner === "me";
+        listing.owner === accountId;
 
 
     return `
@@ -3203,7 +3178,7 @@ function renderMyListings() {
     const mine =
         listings.filter(
             listing =>
-                listing.owner === "me"
+                listing.owner === accountId
         );
 
 
@@ -3578,7 +3553,7 @@ function openBid(id) {
 
 
     if (
-        listing.owner === "me"
+        listing.owner === accountId
     ) {
 
         showToast(
@@ -3742,7 +3717,7 @@ async function submitBid(event) {
 
 
     if (
-        listing.owner === "me"
+        listing.owner === accountId
     ) {
 
         closeBid();
@@ -3871,7 +3846,7 @@ async function buyListing(id) {
 
 
     if (
-        listing.owner === "me"
+        listing.owner === accountId
     ) {
 
         showToast(
@@ -4193,4 +4168,3 @@ initialize();
 </body>
 
 </html>
-```
